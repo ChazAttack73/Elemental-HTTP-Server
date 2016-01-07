@@ -8,8 +8,6 @@ var server = http.createServer( connectionMade ).listen( 8080 );
 function connectionMade( req, res ) {
   //console.log( req );
   //console.log( res );
-  var contentTypeFinder = req.url.split( '.' );
-  var contentType = contentTypeFinder[1];
 
   if( req.method === 'GET' ) {
     if( req.url === '/' ) {
@@ -22,18 +20,16 @@ function connectionMade( req, res ) {
           if ( err ) console.log( err );
           res.writeHead( 404, {
             'Server': 'Chaz Attack',
-            'Content-Type': 'text/html; charset=utf-8',
             'Date': reqDate
           });
-          return req.end( data );
+          res.end( data );
         });
       }
       res.writeHead( 200, {
         'Server': 'Chaz Attack',
-        'Content-Type': 'text/' + contentType + '; charset=utf-8',
         'Date': reqDate
       });
-      return req.end( data );
+      res.end( data );
     });
   }
 
