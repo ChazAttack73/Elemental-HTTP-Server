@@ -37,6 +37,7 @@ function connectionMade( req, res ) {
       req.setEncoding( 'utf8' );
       req.on( 'data', function( chunk ) {
         var parsedChunk = querystring.parse( chunk );
+        console.log(parsedChunk);
 
 //====================== VALIDATE POST REQUEST FORMAT
         // if( parsedChunk.hasOwnProperty( 'elementName' ) === false ) {
@@ -50,6 +51,7 @@ function connectionMade( req, res ) {
           fs.readFile( 'public/element-template.html', function( err, data ) {
             if ( err ) console.log( err );
               var stringyTemplate = data.toString();
+              console.log(stringyTemplate);
 
               var newElement = stringyTemplate
                 .replace( '{{NEW NAME HERE}}', parsedChunk.elementName )
@@ -57,7 +59,6 @@ function connectionMade( req, res ) {
                 .replace( '{{NEW ELEMENT SYMBOL}}', parsedChunk.elementSymbol )
                 .replace( '{{NEW ELEMENT ATOMIC NUMBER}}', parsedChunk.elementAtomicNumber )
                 .replace( '{{NEW ELEMENT DESCRIPTION}}', parsedChunk.elementDescription );
-
 
               fs.writeFile( 'public/' + parsedChunk.elementName.toLowerCase() + '.html', newElement, function( err ) {
                 if ( err ) console.log( err );
